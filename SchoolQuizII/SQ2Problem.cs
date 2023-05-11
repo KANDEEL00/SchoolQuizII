@@ -1,14 +1,9 @@
 ﻿using Helpers;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
-using System.Timers;
 
 namespace Problem
 {
@@ -26,7 +21,7 @@ namespace Problem
             int[] outputNumbers;
 
             N = 30;
-            expectedVal = 2 ; 
+            expectedVal = 2;
             outputVal = SchoolQuizII.SolveValue(N, k);
             outputNumbers = SchoolQuizII.ConstructSolution(N, k);
             PrintCase(N, k, outputVal, outputNumbers, expectedVal);
@@ -44,10 +39,10 @@ namespace Problem
             PrintCase(N, k, outputVal, outputNumbers, expectedVal);
         }
 
-       
+
 
         Thread tstCaseThr;
-        bool caseTimedOut ;
+        bool caseTimedOut;
         bool caseException;
 
         protected override void RunOnSpecificFile(string fileName, HardniessLevel level, int timeOutInMillisec)
@@ -57,7 +52,7 @@ namespace Problem
             int[] numbers = null;
             int output = -1;
             int actualResult = 0;
-            int j=0;
+            int j = 0;
 
             Stream s = new FileStream(fileName, FileMode.Open);
             BinaryReader br = new BinaryReader(s);
@@ -107,53 +102,54 @@ namespace Problem
                     Stopwatch sw = null;
                     caseException = false;
                     int[] outputVals = null;
+                    //{
+                    //    tstCaseThr = new Thread(() =>
+                    //    {
+                    //        try
+                    //        {
+                    //sw = Stopwatch.StartNew();
+                    if (c == 0)
                     {
-                        tstCaseThr = new Thread(() =>
-                        {
-                            try
-                            {
-                                sw = Stopwatch.StartNew();
-                                if (c == 0)
-                                {
-                                    output = SchoolQuizII.SolveValue(N, numbers);
-                                }
-                                else
-                                {
-                                    outputVals = SchoolQuizII.ConstructSolution(N, numbers);
-                                    if(outputVals!=null)
-                                        output = outputVals.Length;
-                                }
-                                sw.Stop();
-                                //Console.WriteLine("time = {0} ms", sw.ElapsedMilliseconds);
-                                //Console.WriteLine("output = {0}", output);
-                            }
-                            catch (Exception e)
-                            {
-                                Console.WriteLine(e.Message);
-                                caseException = true;
-                                output = -1;
-                                outputVals = null;
-                            }
-                            caseTimedOut = false;
-                        });
+                        output = SchoolQuizII.SolveValue(N, numbers);
+                    }
+                    else
+                    {
+                        outputVals = SchoolQuizII.ConstructSolution(N, numbers);
+                        if (outputVals != null)
+                            output = outputVals.Length;
+                    }
+                    //sw.Stop();
+                    //Console.WriteLine("time = {0} ms", sw.ElapsedMilliseconds);
+                    //Console.WriteLine("output = {0}", output);
+                    //        }
+                    //        catch (Exception e)
+                    //        {
+                    //            Console.WriteLine(e.Message);
+                    //            caseException = true;
+                    //            output = -1;
+                    //            outputVals = null;
+                    //        }
+                    //        caseTimedOut = false;
+                    //    });
 
-                        //StartTimer(timeOutInMillisec);
-                        tstCaseThr.Start();
-                        tstCaseThr.Join(timeOutInMillisec);
-                    }
+                    //    //StartTimer(timeOutInMillisec);
+                    //    tstCaseThr.Start();
+                    //    tstCaseThr.Join(timeOutInMillisec);
+                    //}
 
-                    if (caseTimedOut)       //Timedout
-                    {
-                        tstCaseThr.Abort();
-                        Console.WriteLine("Time Limit Exceeded in Case {0} [FUNCTION#{1}].", i, c+1);
-                        timeLimitCases[c]++;
-                    }
-                    else if (caseException) //Exception 
-                    {
-                        Console.WriteLine("Exception in Case {0} [FUNCTION#{1}].", i, c+1);
-                        wrongCases[c]++;
-                    }
-                    else if (output == actualResult)    //Passed
+                    //if (caseTimedOut)       //Timedout
+                    //{
+                    //    tstCaseThr.Abort();
+                    //    Console.WriteLine("Time Limit Exceeded in Case {0} [FUNCTION#{1}].", i, c + 1);
+                    //    timeLimitCases[c]++;
+                    //}
+                    //else if (caseException) //Exception 
+                    //{
+                    //    Console.WriteLine("Exception in Case {0} [FUNCTION#{1}].", i, c + 1);
+                    //    wrongCases[c]++;
+                    //}
+                    //else
+                    if (output == actualResult)    //Passed
                     {
                         if (c == 0)
                         {
@@ -175,7 +171,7 @@ namespace Problem
                     }
                     else                    //WrongAnswer
                     {
-                        Console.WriteLine("Wrong Answer in Case {0} [FUNCTION#{1}].", i, c+1);
+                        Console.WriteLine("Wrong Answer in Case {0} [FUNCTION#{1}].", i, c + 1);
                         if (level == HardniessLevel.Easy)
                         {
                             if (output != -1)
@@ -195,7 +191,7 @@ namespace Problem
             br.Close();
             for (int c = 0; c < 2; c++)
             {
-                Console.WriteLine("EVALUATION OF FUNCTION#{0}:", c+1);
+                Console.WriteLine("EVALUATION OF FUNCTION#{0}:", c + 1);
                 Console.WriteLine("# correct = {0}", correctCases[c]);
                 Console.WriteLine("# time limit = {0}", timeLimitCases[c]);
                 Console.WriteLine("# wrong = {0}", wrongCases[c]);
@@ -208,7 +204,7 @@ namespace Problem
 
         }
 
-       
+
 
         protected override void OnTimeOut(DateTime signalTime)
         {
@@ -227,9 +223,9 @@ namespace Problem
 
             int N = X.Length;
 
-            for (int i = 0 ; i < N; i++)
+            for (int i = 0; i < N; i++)
             {
-                    Console.Write(X[i] + "  ");
+                Console.Write(X[i] + "  ");
             }
             Console.WriteLine();
         }
@@ -286,10 +282,10 @@ namespace Problem
                 Console.WriteLine("WRONG: sum of returned numbers NOT EQUAL the given value (N = {0})", inpVal);
                 return false;
             }
-                
+
             return true;
         }
         #endregion
-   
+
     }
 }

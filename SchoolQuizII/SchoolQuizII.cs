@@ -23,20 +23,25 @@ namespace Problem
         static public int SolveValue(int N, int[] numbers)
         {
             Array.Sort(numbers);
-            List<int> sol = new List<int>();
+            //List<int> sol = new List<int>();
             int min = int.MaxValue;
             for (int i = numbers.Length - 1; i >= 0; i--)
             {
                 int n = N;
                 int j = i;
                 int cnt = 0, rem = 0;
-                List<int> intgs = new List<int>();
+                //List<int> intgs = new List<int>();
                 while (true)
                 {
                     if (n >= numbers[j])
                     {
-                        intgs.Add(numbers[j]);
-                        cnt += n / numbers[j];
+                        int add = n / numbers[j];
+                        cnt += add;
+                        //while (add > 0)
+                        //{
+                        //    intgs.Add(numbers[j]);
+                        //    add--;
+                        //}
                         rem = n % numbers[j];
                         if (rem == 0) break;
                         n = rem;
@@ -46,7 +51,7 @@ namespace Problem
                 if (min > cnt)
                 {
                     min = cnt;
-                    sol = intgs;
+                    //sol = intgs;
                 }
             }
             return min;
@@ -72,8 +77,13 @@ namespace Problem
                 {
                     if (n >= numbers[j])
                     {
-                        intgs.Add(numbers[j]);
-                        cnt += n / numbers[j];
+                        int add = n / numbers[j];
+                        cnt += add;
+                        while (add > 0)
+                        {
+                            intgs.Add(numbers[j]);
+                            add--;
+                        }
                         rem = n % numbers[j];
                         if (rem == 0) break;
                         n = rem;
